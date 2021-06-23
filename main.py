@@ -63,20 +63,30 @@ class RegistrationScreen(Screen):
 
     def take_photo(self):
         layout = BoxLayout(orientation='vertical')
+        layout1 = BoxLayout(orientation='horizontal', spacing=100)
         self.image = Image()
         layout.add_widget(self.image)
+        self.close_window = MDRoundFlatButton(text='X',
+                                              pos_hint={'center_x': .5, 'center_y': .5},
+                                              size_hint=(None, None))
+
+        self.close_window.bind(on_press=self.closeWindow)
+        layout1.add_widget(self.close_window)
+
         self.save_img = MDRoundFlatButton(text='Take Photo',
                                          pos_hint={'center_x': .5, 'center_y': .5},
                                          size_hint=(None, None))
 
         self.save_img.bind(on_press=self.take_picture)
-        layout.add_widget(self.save_img)
+        layout1.add_widget(self.save_img)
+
+        layout.add_widget(layout1)
         self.capture = cv2.VideoCapture(0)
         Clock.schedule_interval(self.load_video, 1.0/30.0)
         self.pop = Popup(title='Smile!', background_color='white',
                          content=layout,
-                         size_hint=(None, None), size=(650, 600),
-                         on_touch_down=Popup.dismiss)
+                         size_hint=(None, None), size=(650, 800))
+                         #on_touch_down=Popup.dismiss)
         self.pop.open()
         #self.capture.release()
         return layout
@@ -93,7 +103,14 @@ class RegistrationScreen(Screen):
     def take_picture(self, *args):
         image_name = 'picture.png'
         cv2.imwrite(image_name, self.image_frame)
-        # self.capture.release()
+
+        # cv2.destroyAllWindows()
+
+    def closeWindow(self, obj):
+        self.pop.dismiss()
+        #self.capture.release()
+
+
 
 
 class ProfileScreen(Screen):
@@ -118,7 +135,6 @@ class LoginRegForm(MDApp):
         self.theme_cls.primary_palette = 'DeepPurple'
         screen = Builder.load_file('my.kv')
         return screen
-
 
 
 if __name__ == "__main__":

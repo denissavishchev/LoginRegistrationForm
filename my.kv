@@ -125,20 +125,32 @@ ScreenManager:
                 group: "x"
 
         Label:
-            text: "Avatar"
+            text: "Photo"
             font_size: '20dp'
             size_hint: .1, .15
-            pos_hint: {'x':0.08,'y':0.33}
+            pos_hint: {'x':0.1,'y':0.33}
 
         MDFillRoundFlatButton:
             id: photo
             size_hint: .22, .06
-            normal_color: 'white'
-            color_active: 1, 1, 1, .1
+            md_bg_color: [82/255, 46/255, 146/255, .45]
+            theme_text_color: "Custom"
+            text_color: [1,1,1,1]
             text: "Take Photo"
             pos_hint: {'center_x':0.45,'center_y':0.4}
             on_press:
                 root.take_photo()
+
+        MDFillRoundFlatButton:
+            id: loadPhoto
+            size_hint: .22, .06
+            md_bg_color: [82/255, 46/255, 146/255, .45]
+            theme_text_color: "Custom"
+            text_color: [1,1,1,1]
+            text: "LoadPhoto"
+            pos_hint: {'center_x':0.75,'center_y':0.4}
+            on_press:
+#                root.load_photo()
 
     MDTextFieldRound:
         id: passwreg
