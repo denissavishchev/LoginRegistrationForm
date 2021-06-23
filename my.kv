@@ -1,0 +1,187 @@
+ScreenManager:
+    LoginScreen:
+    RegistrationScreen:
+    ProfileScreen:
+
+<LoginScreen>:
+    passw: passw
+    email:email
+    name: 'login'
+    FloatLayouts:
+
+        MDTextFieldRound:
+            id: email
+            size_hint: .8, .06
+            icon_left: 'email-open'
+            normal_color: 'white'
+            color_active: 1, 1, 1, .1
+            hint_text: "Email"
+            pos_hint: {'center_x':0.5,'center_y':0.7}
+
+        MDTextFieldRound:
+            id: passw
+            size_hint: .8, .06
+            icon_left: 'lock'
+            #icon_right: 'eye-off'
+            normal_color: 'white'
+            color_active: 1, 1, 1, .1
+            hint_text: "Password"
+            password: True
+            pos_hint: {'center_x':0.5,'center_y':0.6}
+
+        MDIconButton:
+            icon: 'eye'
+            pos_hint: {'center_x':0.9,'center_y':0.6}
+            on_press:
+                root.hide()
+
+        Buttons:
+            text: 'Sign In'
+            size_hint: .5, None
+            pos_hint: {'center_x':0.5,'center_y':0.5}
+            on_press:
+                root.login()
+#                root.manager.current = 'profile'
+#                root.manager.transition.direction = 'left'
+
+        Buttons:
+            text: 'Create New Account'
+            pos_hint: {'center_x':0.5,'center_y':0.1}
+            on_press:
+                root.manager.current = 'registration'
+                root.manager.transition.direction = 'left'
+
+<RegistrationScreen>:
+    name: 'registration'
+    passwreg: passwreg
+    FloatLayouts:
+
+        MDTextFieldRound:
+            id: username
+            size_hint: .8, .06
+            normal_color: 'white'
+            color_active: 1, 1, 1, .1
+            hint_text: "Username"
+            pos_hint: {'center_x':0.5,'center_y':0.9}
+
+        MDTextFieldRound:
+            id: name
+            size_hint: .33, .06
+            normal_color: 'white'
+            color_active: 1, 1, 1, .1
+            hint_text: "Name"
+            pos_hint: {'center_x':0.265,'center_y':0.8}
+
+        MDTextFieldRound:
+            id: surname
+            size_hint: .33, .06
+            normal_color: 'white'
+            color_active: 1, 1, 1, .1
+            hint_text: "Surname"
+            pos_hint: {'center_x':0.73,'center_y':0.8}
+
+        MDTextFieldRound:
+            id: country
+            size_hint: .8, .06
+            normal_color: 'white'
+            color_active: 1, 1, 1, .1
+            hint_text: "Country"
+            pos_hint: {'center_x':0.5,'center_y':0.7}
+
+        MDTextFieldRound:
+            id: emailreg
+            size_hint: .8, .06
+            normal_color: 'white'
+            color_active: 1, 1, 1, .1
+            hint_text: "Email"
+            pos_hint: {'center_x':0.5,'center_y':0.6}
+
+        Label:
+            text: "Gender"
+            font_size: '20dp'
+            size_hint: .1, .15
+            pos_hint: {'x':0.11,'y':0.43}
+
+
+        MDBoxLayout:
+            adaptive_size: True
+            spacing: '35dp'
+            pos_hint: {"center_x": .6, "center_y": .5}
+
+            MyToggleButton:
+                text: "Male"
+                md_bg_color: [1,1,1,1]
+                text_color: {'normal': (app.theme_cls.primary_color), 'down': (1,1,1,1)} [self.state]
+                background_normal: [1,1,1,1]
+                background_down: app.theme_cls.primary_color
+                group: "x"
+
+            MyToggleButton:
+                text: "Female"
+                md_bg_color: [1,1,1,1]
+                text_color: {'normal': (app.theme_cls.primary_color), 'down': (1,1,1,1)} [self.state]
+                background_normal: [1,1,1,1]
+                background_down: app.theme_cls.primary_color
+                group: "x"
+
+        Label:
+            text: "Avatar"
+            font_size: '20dp'
+            size_hint: .1, .15
+            pos_hint: {'x':0.08,'y':0.33}
+
+        MDFillRoundFlatButton:
+            id: photo
+            size_hint: .22, .06
+            normal_color: 'white'
+            color_active: 1, 1, 1, .1
+            text: "Take Photo"
+            pos_hint: {'center_x':0.45,'center_y':0.4}
+            on_press:
+                root.take_photo()
+
+    MDTextFieldRound:
+        id: passwreg
+        size_hint: .8, .06
+        normal_color: 'white'
+        color_active: 1, 1, 1, .1
+        hint_text: "Password"
+        password: True
+        pos_hint: {'center_x':0.5,'center_y':0.2}
+
+    MDIconButton:
+        icon: 'eye'
+        pos_hint: {'center_x':0.9,'center_y':0.2}
+        on_press:
+            root.hide()
+
+    Buttons:
+        text: 'Create Account'
+        pos_hint: {'center_x':0.5,'center_y':0.1}
+        on_press:
+            root.manager.current = 'login'
+            root.manager.transition.direction = 'right'
+
+<ProfileScreen>:
+    name: 'profile'
+    FloatLayout:
+        canvas:
+#            Color:
+#                rgb: 1, 1, 1
+            Rectangle:
+                source: 'images/gears.gif'
+                size: self.size
+
+<Buttons@MDFillRoundFlatButton>
+    md_bg_color: [255/255, 102/255, 0/255, .35]
+    font_size: '18dp'
+    theme_text_color: "Custom"
+    text_color: [1,1,1,1]
+
+<FloatLayouts@FloatLayout>
+    canvas.before:
+#            Color:
+#                rgb: 1, 1, 1
+        Rectangle:
+            source: 'images/surr.jpg'
+            size: self.size
