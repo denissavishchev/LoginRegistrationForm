@@ -14,6 +14,7 @@ from kivymd.uix.button import MDRoundFlatButton
 import cv2
 from kivy.clock import Clock
 from kivy.graphics.texture import Texture
+import os
 
 
 kivy.config.Config.set('graphics', 'resizable', True)
@@ -85,10 +86,9 @@ class RegistrationScreen(Screen):
         Clock.schedule_interval(self.load_video, 1.0/30.0)
         self.pop = Popup(title='Smile!', background_color='white',
                          content=layout,
-                         size_hint=(None, None), size=(650, 800))
+                         size_hint=(None, None), size=(600, 800))
                          #on_touch_down=Popup.dismiss)
         self.pop.open()
-        #self.capture.release()
         return layout
 
     def load_video(self, *args):
@@ -104,14 +104,20 @@ class RegistrationScreen(Screen):
         image_name = 'picture.png'
         cv2.imwrite(image_name, self.image_frame)
 
-        # cv2.destroyAllWindows()
-
     def closeWindow(self, obj):
         self.pop.dismiss()
         #self.capture.release()
+        #cv2.destroyAllWindows()
 
-
-
+    def registration_complete(self):
+        layout = BoxLayout(orientation='vertical')
+        label = Label(text='Complete!', font_size='24dp')
+        layout.add_widget(label)
+        self.pop = Popup(title='', background_color='navy',
+                         content=layout,
+                         size_hint=(None, None), size=(350, 200),
+                         on_touch_down=Popup.dismiss)
+        self.pop.open()
 
 class ProfileScreen(Screen):
     pass

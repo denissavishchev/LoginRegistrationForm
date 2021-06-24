@@ -141,15 +141,15 @@ ScreenManager:
             on_press:
                 root.take_photo()
 
-        MDFillRoundFlatButton:
-            id: loadPhoto
-            size_hint: .22, .06
-            md_bg_color: [82/255, 46/255, 146/255, .45]
-            theme_text_color: "Custom"
-            text_color: [1,1,1,1]
-            text: "LoadPhoto"
-            pos_hint: {'center_x':0.75,'center_y':0.4}
-            on_press:
+#        MDFillRoundFlatButton:
+#            id: loadPhoto
+#            size_hint: .22, .06
+#            md_bg_color: [82/255, 46/255, 146/255, .45]
+#            theme_text_color: "Custom"
+#            text_color: [1,1,1,1]
+#            text: "LoadPhoto"
+#            pos_hint: {'center_x':0.75,'center_y':0.4}
+#            on_press:
 #                root.load_photo()
 
     MDTextFieldRound:
@@ -173,6 +173,8 @@ ScreenManager:
         on_press:
             root.manager.current = 'login'
             root.manager.transition.direction = 'right'
+            root.registration_complete()
+            #root.add_to_database()
 
 <ProfileScreen>:
     name: 'profile'
