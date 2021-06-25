@@ -54,6 +54,15 @@ ScreenManager:
 <RegistrationScreen>:
     name: 'registration'
     passwreg: passwreg
+    username: username
+    firstname: firstname
+    surname: surname
+    country: country
+    emailreg: emailreg
+    male: male
+    female: female
+    photo: photo
+
     FloatLayouts:
 
         MDTextFieldRound:
@@ -65,7 +74,7 @@ ScreenManager:
             pos_hint: {'center_x':0.5,'center_y':0.9}
 
         MDTextFieldRound:
-            id: name
+            id: firstname
             size_hint: .33, .06
             normal_color: 'white'
             color_active: 1, 1, 1, .1
@@ -109,6 +118,7 @@ ScreenManager:
             pos_hint: {"center_x": .6, "center_y": .5}
 
             MyToggleButton:
+                id: male
                 text: "Male"
                 md_bg_color: [1,1,1,1]
                 text_color: {'normal': (app.theme_cls.primary_color), 'down': (1,1,1,1)} [self.state]
@@ -117,6 +127,7 @@ ScreenManager:
                 group: "x"
 
             MyToggleButton:
+                id: female
                 text: "Female"
                 md_bg_color: [1,1,1,1]
                 text_color: {'normal': (app.theme_cls.primary_color), 'down': (1,1,1,1)} [self.state]
@@ -174,7 +185,7 @@ ScreenManager:
             root.manager.current = 'login'
             root.manager.transition.direction = 'right'
             root.registration_complete()
-            #root.add_to_database()
+            root.add_to_database()
 
 <ProfileScreen>:
     name: 'profile'

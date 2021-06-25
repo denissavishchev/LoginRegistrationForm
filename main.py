@@ -14,8 +14,7 @@ from kivymd.uix.button import MDRoundFlatButton
 import cv2
 from kivy.clock import Clock
 from kivy.graphics.texture import Texture
-import os
-
+import sqlite3 as sql
 
 kivy.config.Config.set('graphics', 'resizable', True)
 Window.size = (360, 640)  # (720, 1280)
@@ -54,6 +53,22 @@ class LoginScreen(Screen):
 class RegistrationScreen(Screen):
     email = ObjectProperty
     passwreg = ObjectProperty
+    username = ObjectProperty
+    firstname = ObjectProperty
+    surname = ObjectProperty
+    country = ObjectProperty
+    emailreg = ObjectProperty
+    male = ObjectProperty
+    female = ObjectProperty
+    photo = ObjectProperty
+
+    def add_to_database(self):
+        con = sql.connect('devis.db')
+        cur = con.cursor()
+        cur.execute(""" INSERT INTO id (username,firstname,surname,country,emailreg,passwreg,male,female) VALUES (?,?,?,?,?,?,?,?)""",
+                    (self.username.text, self.firstname.text, self.surname.text, self.country.text, self.emailreg.text, self.passwreg.text, self.male.state, self.female.state))
+        con.commit()
+        con.close()
 
     def hide(self):
         if self.passwreg.password == True:
@@ -119,6 +134,8 @@ class RegistrationScreen(Screen):
                          on_touch_down=Popup.dismiss)
         self.pop.open()
 
+
+
 class ProfileScreen(Screen):
     pass
 
@@ -142,6 +159,20 @@ class LoginRegForm(MDApp):
         screen = Builder.load_file('my.kv')
         return screen
 
+    con = sql.connect('devis.db')
+    cur = con.cursor()
+    cur.execute("""CREATE TABLE  IF NOT EXISTS  id(
+        username text,
+        firstname text,
+        surname text,
+        country text,
+        emailreg text,
+        passwreg text,
+        male state,
+        female state)
+        """)
+    con.commit()
+    con.close()
 
 if __name__ == "__main__":
     LoginRegForm().run()
