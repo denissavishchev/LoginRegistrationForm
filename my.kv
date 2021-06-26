@@ -9,6 +9,11 @@ ScreenManager:
     name: 'login'
     FloatLayouts:
 
+        Image:
+            source: 'images/devis.gif'
+            size_hint_x: .5
+            pos_hint: {'center_x':0.5,'center_y':0.86}
+
         MDTextFieldRound:
             id: email
             size_hint: .8, .06
@@ -50,6 +55,12 @@ ScreenManager:
             on_press:
                 root.manager.current = 'registration'
                 root.manager.transition.direction = 'left'
+
+        Label:
+            text: "Devis Laboratory"
+#            font_size: '10dp'
+            size_hint: .1, .05
+            pos_hint: {'x':0.75,'y':0.001}
 
 <RegistrationScreen>:
     name: 'registration'
@@ -189,13 +200,11 @@ ScreenManager:
 
 <ProfileScreen>:
     name: 'profile'
-    FloatLayout:
-        canvas:
-#            Color:
-#                rgb: 1, 1, 1
-            Rectangle:
-                source: 'images/gears.gif'
-                size: self.size
+    Buttons:
+        text: 'Avatar'
+        pos_hint: {'center_x':0.5,'center_y':0.1}
+        on_press:
+            root.read_avatar()
 
 <Buttons@MDFillRoundFlatButton>
     md_bg_color: [255/255, 102/255, 0/255, .35]

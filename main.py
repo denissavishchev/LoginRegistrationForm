@@ -1,3 +1,5 @@
+import sqlite3
+
 import kivy
 from kivymd.app import MDApp
 from kivy.lang import Builder
@@ -63,12 +65,17 @@ class RegistrationScreen(Screen):
     photo = ObjectProperty
 
     def add_to_database(self):
+        with open('Avatar.png', 'rb') as f:
+            self.avatar = f.read()
+
         con = sql.connect('devis.db')
         cur = con.cursor()
-        cur.execute(""" INSERT INTO id (username,firstname,surname,country,emailreg,passwreg,male,female) VALUES (?,?,?,?,?,?,?,?)""",
-                    (self.username.text, self.firstname.text, self.surname.text, self.country.text, self.emailreg.text, self.passwreg.text, self.male.state, self.female.state))
+        cur.execute(""" INSERT INTO id (username,firstname,surname,country,emailreg,passwreg,male,female,avatar) VALUES (?,?,?,?,?,?,?,?,?)""",
+                    (self.username.text, self.firstname.text, self.surname.text, self.country.text, self.emailreg.text, self.passwreg.text,
+                     self.male.state, self.female.state, self.avatar))
         con.commit()
         con.close()
+
 
     def hide(self):
         if self.passwreg.password == True:
@@ -116,7 +123,7 @@ class RegistrationScreen(Screen):
 
 
     def take_picture(self, *args):
-        image_name = 'picture.png'
+        image_name = 'Avatar.png'
         cv2.imwrite(image_name, self.image_frame)
 
     def closeWindow(self, obj):
@@ -137,7 +144,16 @@ class RegistrationScreen(Screen):
 
 
 class ProfileScreen(Screen):
-    pass
+    def read_avatar(self):
+        con = sqlite3.connect('devis.db')
+        cur = con.cursor()
+        m = cur.execute("""
+        SELECT * FROM id
+        """)
+        for x in m:
+            rec_data = x[9]
+        with open('1.png', 'wb') as f:
+            f.write(rec_data)
 
 
 sm = ScreenManager()
@@ -162,6 +178,7 @@ class LoginRegForm(MDApp):
     con = sql.connect('devis.db')
     cur = con.cursor()
     cur.execute("""CREATE TABLE  IF NOT EXISTS  id(
+        UserID integer PRIMARY KEY,
         username text,
         firstname text,
         surname text,
@@ -169,10 +186,12 @@ class LoginRegForm(MDApp):
         emailreg text,
         passwreg text,
         male state,
-        female state)
+        female state,
+        avatar BLOB)
         """)
     con.commit()
     con.close()
+
 
 if __name__ == "__main__":
     LoginRegForm().run()
