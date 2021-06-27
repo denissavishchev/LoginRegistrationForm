@@ -39,7 +39,7 @@ class LoginScreen(Screen):
             con = sqlite3.connect('devis.db')
             cur = con.cursor()
             m = cur.execute("""
-            SELECT * FROM id WHERE emailreg, passwreg LIKE "{}""{}";""".format(self.ids.email.text, self.ids.passwreg.text))
+            SELECT * FROM id WHERE emailreg AND passwreg LIKE "{}{}";""".format(self.ids.email.text, self.ids.passwreg.text))
             for x in m:
                 avatar = x[9]
             with open('1.png', 'wb') as f:
@@ -136,11 +136,11 @@ class RegistrationScreen(Screen):
 
     def registration_complete(self):
         layout = BoxLayout(orientation='vertical')
-        label = Label(text='Complete!', font_size='24dp')
+        label = Label(text='Welcome, '+self.username.text+'!', font_size='18dp', halign="center")
         layout.add_widget(label)
-        self.pop = Popup(title='', background_color='navy',
+        self.pop = Popup(title='Registration Successful!', title_align="center", background_color='navy',
                          content=layout,
-                         size_hint=(None, None), size=(350, 200),
+                         size_hint=(None, None), size=(450, 200),
                          on_touch_down=Popup.dismiss)
         self.pop.open()
 
