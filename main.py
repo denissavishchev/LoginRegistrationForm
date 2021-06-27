@@ -33,23 +33,26 @@ class LoginScreen(Screen):
         elif self.passw.password == False:
             self.passw.password = True
 
-    def login(self):
-        layout = BoxLayout(orientation='vertical')
-        image = Image(source='images/6.png')
-        labelEmail = Label(text='Email: '+self.email.text)
-        labelPass = Label(text='Password: ' + self.passw.text)
 
-        layout.add_widget(image)
-        layout.add_widget(labelEmail)
-        layout.add_widget(labelPass)
-        self.pop = Popup(title='Done!', background_color='navy',
-                         content=layout,
-                         size_hint=(None, None), size=(650, 1200),
-                         on_touch_down=Popup.dismiss)
-        self.pop.open()
-
-    # def closePopUp(self, obj):
-    #     self.pop.dismiss()
+    def sign_in(self):
+        try:
+            con = sqlite3.connect('devis.db')
+            cur = con.cursor()
+            m = cur.execute("""
+            SELECT * FROM id WHERE emailreg LIKE "{}";""".format(self.ids.email.text))
+            for x in m:
+                avatar = x[9]
+            with open('1.png', 'wb') as f:
+                f.write(avatar)
+        except:
+            layout = BoxLayout(orientation='vertical')
+            labelError = Label(text='Email is not registered!')
+            layout.add_widget(labelError)
+            self.pop = Popup(title='Error!', background_color='navy',
+                             content=layout,
+                             size_hint=(None, None), size=(650, 250),
+                             on_touch_down=Popup.dismiss)
+            self.pop.open()
 
 
 class RegistrationScreen(Screen):
@@ -144,16 +147,7 @@ class RegistrationScreen(Screen):
 
 
 class ProfileScreen(Screen):
-    def read_avatar(self):
-        con = sqlite3.connect('devis.db')
-        cur = con.cursor()
-        m = cur.execute("""
-        SELECT * FROM id
-        """)
-        for x in m:
-            avatar = x[9]
-        with open('1.png', 'wb') as f:
-            f.write(avatar)
+    pass
 
 
 sm = ScreenManager()

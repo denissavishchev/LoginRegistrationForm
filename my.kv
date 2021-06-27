@@ -16,6 +16,7 @@ ScreenManager:
 
         MDTextFieldRound:
             id: email
+            text:""
             size_hint: .8, .06
             icon_left: 'email-open'
             normal_color: 'white'
@@ -45,9 +46,9 @@ ScreenManager:
             size_hint: .5, None
             pos_hint: {'center_x':0.5,'center_y':0.5}
             on_press:
-                root.login()
-                root.manager.current = 'profile'
-                root.manager.transition.direction = 'left'
+#                root.manager.current = 'profile'
+#                root.manager.transition.direction = 'left'
+                root.sign_in()
 
         Buttons:
             text: 'Create New Account'
