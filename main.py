@@ -151,9 +151,9 @@ class ProfileScreen(Screen):
         SELECT * FROM id
         """)
         for x in m:
-            rec_data = x[9]
+            avatar = x[9]
         with open('1.png', 'wb') as f:
-            f.write(rec_data)
+            f.write(avatar)
 
 
 sm = ScreenManager()

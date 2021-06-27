@@ -46,8 +46,8 @@ ScreenManager:
             pos_hint: {'center_x':0.5,'center_y':0.5}
             on_press:
                 root.login()
-#                root.manager.current = 'profile'
-#                root.manager.transition.direction = 'left'
+                root.manager.current = 'profile'
+                root.manager.transition.direction = 'left'
 
         Buttons:
             text: 'Create New Account'
@@ -198,13 +198,64 @@ ScreenManager:
             root.registration_complete()
             root.add_to_database()
 
+    Buttons:
+        text: 'X'
+        pos_hint: {'center_x':0.1,'center_y':0.1}
+        on_press:
+            root.manager.current = 'login'
+            root.manager.transition.direction = 'left'
+
 <ProfileScreen>:
     name: 'profile'
+    FloatLayouts:
+        MDCard:
+            orientation: "vertical"
+#            border_radius: [200]
+            radius: [100]
+            size_hint: None, None
+            size: "280dp", "250dp"
+            pos_hint: {"center_x": .5, "center_y": .77}
+
+            FitImage:
+                source: "avatar.png"
+                radius: [100]
+#                size_hint_y: None
+                pos_hint: {"center_x": .5, "center_y": .5}
+
+        MDCard:
+            orientation: "vertical"
+            radius: [100]
+            size_hint: None, None
+            size: "280dp", "250dp"
+            pos_hint: {"center_x": .5, "center_y": .34}
+            MDLabel:
+                text: "July 27, 1984"
+#                size_hint: .9, .7
+                pos_hint: {"x": .1, "y": .9}
+    #                height: self.texture_size[1]
+                theme_text_color: "Primary"
+            MDLabel:
+                text: "July 27, 1984"
+                size_hint: .9, .7
+    #                pos_hint: {"center_x": .5, "center_y": .38}
+    #                height: self.texture_size[1]
+                theme_text_color: "Primary"
+            MDLabel:
+                text: "July 27, 1984"
+                size_hint: .9, .7
+    #                pos_hint: {"center_x": .5, "center_y": .38}
+    #                height: self.texture_size[1]
+                theme_text_color: "Primary"
+
+
     Buttons:
-        text: 'Avatar'
-        pos_hint: {'center_x':0.5,'center_y':0.1}
+        text: 'Logout'
+        pos_hint: {'center_x':0.5,'center_y':0.075}
         on_press:
-            root.read_avatar()
+            root.manager.current = 'login'
+            root.manager.transition.direction = 'down'
+
+
 
 <Buttons@MDFillRoundFlatButton>
     md_bg_color: [255/255, 102/255, 0/255, .35]
