@@ -39,7 +39,7 @@ class LoginScreen(Screen):
             con = sqlite3.connect('devis.db')
             cur = con.cursor()
             m = cur.execute("""
-            SELECT * FROM id WHERE emailreg LIKE "{}";""".format(self.ids.email.text))
+            SELECT * FROM id WHERE emailreg, passwreg LIKE "{}""{}";""".format(self.ids.email.text, self.ids.passwreg.text))
             for x in m:
                 avatar = x[9]
             with open('1.png', 'wb') as f:
