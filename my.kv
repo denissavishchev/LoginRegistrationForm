@@ -5,7 +5,7 @@ ScreenManager:
 
 <LoginScreen>:
     passw: passw
-    email:email
+    email: email
     name: 'login'
     FloatLayouts:
 
@@ -16,7 +16,7 @@ ScreenManager:
 
         MDTextFieldRound:
             id: email
-            text:""
+#            text:""
             size_hint: .8, .06
             icon_left: 'email-open'
             normal_color: 'white'
@@ -26,6 +26,7 @@ ScreenManager:
 
         MDTextFieldRound:
             id: passw
+#            text:""
             size_hint: .8, .06
             icon_left: 'lock'
             #icon_right: 'eye-off'
@@ -46,8 +47,6 @@ ScreenManager:
             size_hint: .5, None
             pos_hint: {'center_x':0.5,'center_y':0.5}
             on_press:
-#                root.manager.current = 'profile'
-#                root.manager.transition.direction = 'left'
                 root.sign_in()
 
         Buttons:
@@ -208,17 +207,21 @@ ScreenManager:
 
 <ProfileScreen>:
     name: 'profile'
+    avatar: ""
+    avatar: avatar
+    profileNick: profileNick
     FloatLayouts:
         MDCard:
             orientation: "vertical"
-#            border_radius: [200]
+            md_bg_color: [255/255, 102/255, 0/255, .35]
             radius: [100]
             size_hint: None, None
             size: "280dp", "250dp"
             pos_hint: {"center_x": .5, "center_y": .77}
 
             FitImage:
-                source: "avatar.png"
+                id: avatar
+                source: "Avatar.png"
                 radius: [100]
 #                size_hint_y: None
                 pos_hint: {"center_x": .5, "center_y": .5}
@@ -226,35 +229,56 @@ ScreenManager:
         MDCard:
             orientation: "vertical"
             radius: [100]
+            md_bg_color: [255/255, 102/255, 0/255, .35]
             size_hint: None, None
             size: "280dp", "250dp"
             pos_hint: {"center_x": .5, "center_y": .34}
             MDLabel:
-                text: "July 27, 1984"
-#                size_hint: .9, .7
-                pos_hint: {"x": .1, "y": .9}
-    #                height: self.texture_size[1]
-                theme_text_color: "Primary"
             MDLabel:
-                text: "July 27, 1984"
-                size_hint: .9, .7
-    #                pos_hint: {"center_x": .5, "center_y": .38}
-    #                height: self.texture_size[1]
-                theme_text_color: "Primary"
+                id: profileNick
+                text: "NickName:"
+                pos_hint: {"x": .1}
+                theme_text_color: "Custom"
+                text_color: [1,1,1,1]
             MDLabel:
-                text: "July 27, 1984"
-                size_hint: .9, .7
-    #                pos_hint: {"center_x": .5, "center_y": .38}
-    #                height: self.texture_size[1]
-                theme_text_color: "Primary"
-
+                id: profileName
+                text: "Name:"
+                pos_hint: {"x": .1}
+                theme_text_color: "Custom"
+                text_color: [1,1,1,1]
+            MDLabel:
+                id:profileSurname
+                text: "Surname:"
+                pos_hint: {"x": .1}
+                theme_text_color: "Custom"
+                text_color: [1,1,1,1]
+            MDLabel:
+                id:profileCountry
+                text: "Country:"
+                pos_hint: {"x": .1}
+                theme_text_color: "Custom"
+                text_color: [1,1,1,1]
+            MDLabel:
+                id:profileEmail
+                text: "Email:"
+                pos_hint: {"x": .1}
+                theme_text_color: "Custom"
+                text_color: [1,1,1,1]
+            MDLabel:
+                id:profileGender
+                text: "Gender:"
+                pos_hint: {"x": .1}
+                theme_text_color: "Custom"
+                text_color: [1,1,1,1]
+            MDLabel:
 
     Buttons:
         text: 'Logout'
         pos_hint: {'center_x':0.5,'center_y':0.075}
         on_press:
             root.manager.current = 'login'
-            root.manager.transition.direction = 'down'
+            root.manager.transition.direction = 'right'
+#            root.log_out()
 
 
 

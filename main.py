@@ -1,5 +1,4 @@
 import sqlite3
-
 import kivy
 from kivymd.app import MDApp
 from kivy.lang import Builder
@@ -10,6 +9,7 @@ from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.image import Image
 from kivy.properties import ObjectProperty
+from kivy.properties import StringProperty
 from kivymd.uix.behaviors.toggle_behavior import MDToggleButton
 from kivymd.uix.button import MDFillRoundFlatButton
 from kivymd.uix.button import MDRoundFlatButton
@@ -23,8 +23,10 @@ Window.size = (360, 640)  # (720, 1280)
 
 
 class LoginScreen(Screen):
+
     email = ObjectProperty
     passw = ObjectProperty
+    avatar = ObjectProperty
 
     def hide(self):
         if self.passw.password == True:
@@ -35,15 +37,31 @@ class LoginScreen(Screen):
 
 
     def sign_in(self):
+
         try:
             con = sqlite3.connect('devis.db')
             cur = con.cursor()
             m = cur.execute("""
-            SELECT * FROM id WHERE emailreg AND passwreg LIKE "{}{}";""".format(self.ids.email.text, self.ids.passwreg.text))
+            SELECT * FROM id WHERE emailreg LIKE "{}" AND passwreg LIKE "{}";""".format(self.ids.email.text, self.ids.passw.text))
             for x in m:
+                username = x[1]
+                firstname = x[2]
+                surname = x[3]
+                city = x[4]
+                email = x[5]
                 avatar = x[9]
-            with open('1.png', 'wb') as f:
-                f.write(avatar)
+
+            print(username)
+            print(firstname)
+            print(surname)
+            print(city)
+            print(email)
+
+            # with open('Avatar.png', 'wb') as f:
+            #     f.write(avatar)
+            self.parent.current = 'profile'
+            self.parent.transition.direction = 'left'
+
         except:
             layout = BoxLayout(orientation='vertical')
             labelError = Label(text='Email is not registered!')
@@ -147,7 +165,12 @@ class RegistrationScreen(Screen):
 
 
 class ProfileScreen(Screen):
-    pass
+    email = ObjectProperty
+    passw = ObjectProperty
+
+    # def log_out(self):
+    #     self.email.text = ""
+    #     self.passw.text = ""
 
 
 sm = ScreenManager()
@@ -159,6 +182,9 @@ class MyToggleButton(MDFillRoundFlatButton, MDToggleButton):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.background_down = self.theme_cls.primary_light
+
+
+
 
 class LoginRegForm(MDApp):
 
